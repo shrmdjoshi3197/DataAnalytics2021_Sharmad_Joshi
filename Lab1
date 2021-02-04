@@ -6,6 +6,8 @@ View(epi_data)
 attach(epi_data)
 fix(epi_data)
 
+### EXERCISE 1 ###
+
 # Variable EPI
 
 EPI
@@ -78,3 +80,63 @@ boxplot(EPI,DALY,WATER_H)
 qqplot(EPI, DALY)
 qqplot(EPI, WATER_H)
 qqplot(DALY, WATER_H)
+
+help("distributions")
+
+### EXERCISE 2 ###
+
+EPILand <- EPI[!Landlock]
+Eland <- EPILand[!is.na(EPILand)]
+hist(Eland)
+hist(Eland, seq(30., 95., 1.0), prob=TRUE)
+lines(density(Eland,na.rm=TRUE,bw=1.))
+summary(Eland)
+fivenum(Eland)
+stem(Eland)
+rug(Eland)
+plot(ecdf(Eland), do.points=FALSE, verticals = TRUE)
+par(pty="s")
+qqnorm(Eland); qqline(Eland)
+x4 <- seq(30.,95.,1.0)
+qqplot(qt(ppoints(250), df = 5), x4, xlab = "Q-Q plot for Eland")
+qqline(x4)
+
+# Filtering on regions
+
+EPI_South_Asia <- EPI[GEO_subregion == "South Asia"]
+table(GEO_subregion)
+
+## GPW3 DATA ##
+
+gpw_data <- read.csv("GPW3_GRUMP_SummaryInformation_2010.csv", header = TRUE)
+View(gpw_data)
+names(gpw_data)[1] <- "Country"
+attach(gpw_data)
+
+
+# EDA on one of the variables
+
+Largest.Extent..sq.km.
+tf <- is.na(Largest.Extent..sq.km.)
+Largest.Extent..sq.km.2 <- Largest.Extent..sq.km.[!tf]
+Largest.Extent..sq.km.2 <- as.numeric(gsub(",","", Largest.Extent..sq.km.2))
+View(Largest.Extent..sq.km.2)
+summary(Largest.Extent..sq.km.2)
+fivenum(Largest.Extent..sq.km.2)
+stem(Largest.Extent..sq.km.2)
+hist(Largest.Extent..sq.km.2)
+hist(Largest.Extent..sq.km.2, seq(0., 40000., 2000.), prob=TRUE)
+#lines(density(Largest.Extent..sq.km.2,na.rm=TRUE,bw=1.))
+rug(Largest.Extent..sq.km.2)
+plot(ecdf(Largest.Extent..sq.km.2), do.points=FALSE, verticals = TRUE)
+par(pty="s")
+qqnorm(Largest.Extent..sq.km.2); qqline(Largest.Extent..sq.km.2)
+x5 <- seq(0,40000,2000)
+qqplot(qt(ppoints(250), df = 5), x5, xlab = "Q-Q plot for Largest.Extent..sq.km.")
+qqline(x5)
+
+#Filtering on region
+
+GPW_Caribbean <- Largest.Extent..sq.km.2[UNRegion == "Caribbean"]
+table(UNRegion)
+GPW_Caribbean
