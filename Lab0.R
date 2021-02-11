@@ -29,7 +29,7 @@ mean(Auto$weight)
 median((Auto$weight))
 
 data1 <- read.csv(
-  file.choose(), header=T
+  file.choose(), header=TRUE
 )
 
 head(data1)
